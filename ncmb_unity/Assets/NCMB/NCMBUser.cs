@@ -214,9 +214,26 @@ namespace  NCMB
 		//save後処理 　オーバーライド用　新規登録時のみログインを行う
 		internal override void _afterSave (int statusCode, NCMBException error)
 		{
-			if (statusCode == 201 && error == null) {
-				_saveCurrentUser ((NCMBUser)this);
-			}
+			if ((statusCode == 201 || statusCode == 200) && error == null) {
+				if (statusCode == 200) {
+					object value;
+					if (this.serverData.TryGetValue ("userName", out value)) {
+						this.UserName = (string)value;
+					}
+					if (this.serverData.TryGetValue ("password", out value)) {
+						this.Password = (string)value;
+					}
+					if (this.serverData.TryGetValue ("mailAddress", out value)) {
+						this.Email = (string)value;
+					}
+					if (this.serverData.TryGetValue ("authData", out value)) {
+						this.AuthData = (Dictionary<string,object>) value;
+					}
+					if (this.serverData.TryGetValue ("sessionToken", out value)) {
+						this.SessionToken = (string)value;
+					}
+				}
+				_saveCurrentUser ((NCMBUser) this);
 		}
 
 		//delete後処理 　オーバーライド用
