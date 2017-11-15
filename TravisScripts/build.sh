@@ -2,6 +2,8 @@
 project_path=$(pwd)/ncmb_unity
 # Log file path
 log_file=$(pwd)/TravisScripts/unity_build.log
+# Test Runner result file 
+test_result_file=$(pwd)/TravisScripts/test_runner_result.xml
 # Unity command path
 unity_command=/Applications/Unity/Unity.app/Contents/MacOS/Unity
 # Error code
@@ -49,7 +51,6 @@ if [ $build_error != 0 ]; then
 fi
 
 # TEST RUNNER WITH RETRY 
-test_result_file=/Users/VITALIFY/ncmb_unity/TravisScripts/test_runner_result.xml
 while [[ $test_count -lt $((max_retry+1)) && $test_error != 0 ]]
 do
 echo "* Execute Test Runner"
