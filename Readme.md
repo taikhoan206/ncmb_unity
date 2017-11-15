@@ -24,7 +24,6 @@
 
 プッシュ通知機能を利用する場合は、以下のライブラリが必要です。
 (NCMB.package内部に含まれているので、別途用意する必要はありません。)
-
 - Android Support Library
 - Google Play Serivce SDK
 
