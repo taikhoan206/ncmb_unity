@@ -62,7 +62,7 @@ $unity_command \
 
 failed=$(echo 'cat //test-run/@failed' | xmllint --shell $test_result_file | awk -F\" 'NR % 2 == 0 { print $2 }')
 
-if [[ -z $failed && $failed -gt 0 ]];
+if [ -n "${failed}" ] && [ $failed -gt 0 ]; then
 then
   test_error=2
 else 
@@ -81,7 +81,7 @@ total=$(echo 'cat //test-run/@total' | xmllint --shell $test_result_file | awk -
 passed=$(echo 'cat //test-run/@passed' | xmllint --shell $test_result_file | awk -F\" 'NR % 2 == 0 { print $2 }')
 failed=$(echo 'cat //test-run/@failed' | xmllint --shell $test_result_file | awk -F\" 'NR % 2 == 0 { print $2 }')
 
-if [[ -z $total ]]; then
+if [[ -z "${total}" ]]; then
   test_error=3
 fi
 
