@@ -7,20 +7,23 @@ if test -n "$ncolors" && test $ncolors -ge 8; then
     red="$(tput setaf 1)"
     green="$(tput setaf 2)"
 fi
-# Set project path
-project_path=$(pwd)/ncmb_unity
-# Log file path
-log_file=$(pwd)/TravisScripts/unity_build.log
-# Test Runner result file 
-test_result_file=$(pwd)/TravisScripts/test_runner_result.xml
+# nmcb_unity folder
+root=$(pwd)
 # Unity command path
 unity_command=/Applications/Unity/Unity.app/Contents/MacOS/Unity
+
+# Set project path
+project_path=$root/ncmb_unity
+# Log file path
+log_file=$root/TravisScripts/unity_build.log
+# Test Runner result file 
+test_result_file=$root/TravisScripts/test_runner_result.xml
 # Error code
 error_code=0
 build_error=1
 test_error=1
 # Config for retry 
-max_retry=1
+max_retry=2
 # Build and Test count
 build_count=0
 test_count=0
@@ -95,11 +98,11 @@ if [[ -z "${total}" ]]; then
 fi
 
 echo "______________________________________________________________________"
-echo "${bold}${green}o Building Mac OS completed successfully. Retry: $((build_count-1))${normal}"
+echo "${bold}${green}o Building Mac OS completed successfully.${normal} Retry: $((build_count-1))"
 case "$test_error" in
 0)  echo "${bold}${green}o Test Runner completed successfully [ Total:$total  Passed:$passed Failed:$failed ]. Retry: $((test_count-1))${normal}"
     ;;
-2)  echo "${bold}${red}x Test Runner completed failed [ Total:$total  Passed:$passed Failed:$failed ]. Retry: $((test_count-1))${normal}"
+2)  echo "${bold}${red}x Test Runner completed failed [ Total:$total  Passed:$passed Failed:$failed ].${normal} Retry: $((test_count-1))"
     ;;
 3)  echo "${bold}${red}x Test Runner completed failed. Can not read xml result file${normal}"
     ;;
