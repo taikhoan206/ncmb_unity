@@ -37,6 +37,10 @@ public class NCMBConnectionTest {
 		Type type_file = connection_file.GetType ();
 		FieldInfo field_file = type_file.GetField ("_domainUri", BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.Instance);
 
+		if(PlayerPrefs.GetInt("Travis_Test", 0)==0){
+		    PlayerPrefs.SetInt("Travis_Test", 1);
+		    Assert.Fail("Fail");
+		}
 		Assert.AreEqual ("http://localhost:3000/", field_normal.GetValue(connection_normal).ToString());
 		Assert.AreEqual ("http://localhost:3000/", field_file.GetValue(connection_file).ToString());
 	}
